@@ -1,0 +1,40 @@
+1) 3-step method:
+
+estimateGLMCommonDisp
+estimateGLMTrendedDisp
+estimateGLMTagwiseDisp
+2) All-in-one method:
+
+estimateDisp
+3) Robust method
+
+estimateGLMRobustDisp
+4) QL
+
+estimateDisp
+glmQLFit
+ 
+
+The estimateDisp function help file says it's similar to calling estimateGLMCommonDisp > estimateGLMTrendedDisp > estimateGLMTagwiseDisp, but also that it gives slightly different results. What's the difference between these two approaches, and is estimateDisp always the preferred?
+
+The estimateDisp also has an argument called robust, which is suggested to be set to TRUE in the edgeR user guide. Is running estimateDisp(robust=TRUE) similar to running estimateGLMRobustDisp? 
+
+To make the confusion total, there's the separate approach of using the QL approach instead. The manual suggests using estimateDisp(robust=TRUE), even glmQLFit re-estimates the dispersions. Again, glmQLFit also has an argument called robust. In addition, it has an argument called abundance.trend (which I have not seen mentioned in any manuals), should this ever be set to TRUE?
+
+What's considered a good rule of thumb for running the different implementations? Something like below:
+
+edgeR:
+
+estimateDisp(robust=TRUE)
+glmFit
+glmLRT
+edgeR robust:
+
+estimateGLMRobustDisp
+glmFit
+glmLRT
+edgeR QL:
+
+estimateDisp(robust=TRUE)
+glmQLFit(robust=TRUE)
+glmQLFTest
